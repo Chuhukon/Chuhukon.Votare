@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chuhukon - Votare</title>
+
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+	<style>
+		body {
+			margin-top: 25px;
+		}
+	</style>
+</head>
+<body>
+	<script src="/js/jquery-1.6.4.min.js" ></script>
+    <script src="/js/jquery.signalR-1.1.2.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="/signalr/hubs"></script>
+	<script type="text/javascript">
+		$(function () {
+			var votare = $.connection.votareHub; // Declare a proxy to reference the hub. 
+
+			votare.client.changeColor = function (color) {
+				$('body').css("background-color", color)
+			};
+
+			// Start the connection.
+			$.connection.hub.start().done(function () {
+				//nothing
+			});
+		});
+    </script>
+</body>
+</html>
