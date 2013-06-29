@@ -41,7 +41,7 @@
 
 	<script src="/js/jquery-1.6.4.min.js" ></script>
     <script src="/js/jquery.signalR-1.1.2.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
 	<script src="/signalr/hubs"></script>
 	<script type="text/javascript">
 		$(function () {

@@ -4,18 +4,19 @@ using System.Linq;
 using System.Web;
 using Microsoft.AspNet.SignalR;
 using Chuhukon.Votare.Model;
+using System.Collections.Concurrent;
 
 namespace Chuhukon.Votare
 {
 	public class VotareHub : Hub
 	{
-		private static List<Attendee> _attendees;
-		protected List<Attendee> Attendees
+		private static ConcurrentBag<Attendee> _attendees;
+		protected ConcurrentBag<Attendee> Attendees
 		{
 			get
 			{
 				if (_attendees == null)
-					_attendees = new List<Attendee>();
+					_attendees = new ConcurrentBag<Attendee>();
 
 				return _attendees;
 			}
@@ -25,9 +26,9 @@ namespace Chuhukon.Votare
 		{
 			if (!string.IsNullOrWhiteSpace(userId))
 			{
-				var existingAttendee = Attendees.Find(a => a.UserId == userId);
+				var existingAttendee = Attendees.Where(a => a.UserId == userId);
 
-				if (existingAttendee == null)
+				if (existingAttendee == null || existingAttendee.Count() == 0)
 				{
 					Attendees.Add(new Attendee
 					{
@@ -40,11 +41,16 @@ namespace Chuhukon.Votare
 			}
 		}
 
+		public void Status()
+		{
+			SendColor();
+		}
+
 		public void Vote(string userId, bool like)
 		{
 			if (!string.IsNullOrWhiteSpace(userId))
 			{
-				var existingAttendee = Attendees.Find(a => a.UserId == userId);
+				var existingAttendee = Attendees.Where(a => a.UserId == userId).First();
 
 				if (existingAttendee != null)
 				{
@@ -59,7 +65,7 @@ namespace Chuhukon.Votare
 		/// </summary>
 		public void Start()
 		{
-			_attendees = new List<Attendee>();
+			_attendees = new ConcurrentBag<Attendee>();
 			//todo: send event started to all clients...
 		}
 

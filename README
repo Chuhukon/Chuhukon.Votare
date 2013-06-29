@@ -1,2 +1,3 @@
 Download the http://visualstudiogallery.msdn.microsoft.com/e21bf653-dfe1-4d81-b3d3-795cb104066e
-and follow http://msdn.microsoft.com/en-us/library/gg185938.aspx to get ACS running in your application.
+and follow http://msdn.microsoft.com/en-us/library/gg185938.aspx to get ACS running in your application. 
+! Set "Webfarm ready cookies to true", when you deploy to Windows Azure websites.
